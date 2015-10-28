@@ -3,7 +3,8 @@ FROM alpine:3.2
 MAINTAINER Ivan Gaas <ivan.gaas@gmail.com>
 
 # global variables
-ENV TERM="xterm" WODBY_HOME="/srv" WODBY_DOCROOT="${WODBY_HOME}/docroot"
+ENV TERM="xterm" WODBY_HOME="/srv"
+ENV WODBY_DOCROOT="${WODBY_HOME}/docroot"
 
 # define local variables first (to easy maintain in future)
 RUN export S6_OVERLAY_VER=1.16.0.0 && \

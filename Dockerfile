@@ -10,6 +10,8 @@ ENV WODBY_DOCROOT="${WODBY_HOME}/docroot" WODBY_FILES="${WODBY_HOME}/files" WODB
 RUN export S6_OVERLAY_VER=1.16.0.0 && \
 # add wodby user and group, it must me elsewhere with the same uid/gid
     addgroup -S -g 1001 wodby && adduser -HS -u 1001 -h ${WODBY_HOME} -s /bin/sh -G wodby wodby && \
+# fixed alpine bug when /etc/hosts isn't processed
+    echo 'hosts: files dns' >> /etc/nsswitch.conf && \
 # install ca certs to communicate external sites by ssl
     apk add --update ca-certificates && \
 # install s6-overlay (https://github.com/just-containers/s6-overlay) to the system

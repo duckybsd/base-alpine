@@ -19,5 +19,8 @@ RUN export S6_OVERLAY_VER=1.16.0.0 && \
 # clear cache data and disable su
     rm -rf /var/cache/apk/* /tmp/* /usr/bin/su
 
+# copy our scripts to the image
+COPY rootfs /
+
 # default entrypoint
 ENTRYPOINT ["/init"]

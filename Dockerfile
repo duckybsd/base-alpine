@@ -3,7 +3,7 @@ FROM alpine:3.2
 MAINTAINER Ivan Gaas <ivan.gaas@gmail.com>
 
 # global variables
-ENV TERM="xterm-color" WODBY_HOME="/srv"
+ENV TERM="xterm-color" S6_LOGGING="1" S6_LOGGING_SCRIPT="n1 s10000000 T" WODBY_HOME="/srv"
 ENV WODBY_DOCROOT="${WODBY_HOME}/docroot" WODBY_FILES="${WODBY_HOME}/files" WODBY_BACKUPS="${WODBY_HOME}/backups" WODBY_LOGS="${WODBY_HOME}/logs" WODBY_CONF="${WODBY_HOME}/conf" WODBY_REPO="${WODBY_HOME}/.repo"
 ENV WODBY_STATIC="${WODBY_DOCROOT}/static"
 

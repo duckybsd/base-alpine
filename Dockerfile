@@ -1,6 +1,6 @@
 # official base image: https://hub.docker.com/_/alpine/
 FROM alpine:3.2
-MAINTAINER Ivan Gaas <ivan.gaas@gmail.com>
+MAINTAINER Wodby <hello@wodby.com>
 
 # global variables
 ENV TERM="xterm-color" S6_LOGGING="1" S6_LOGGING_SCRIPT="n1 s10000000 T" WODBY_HOME="/srv"

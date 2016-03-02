@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv sh
 
-printf "%s\n%s\n%s\n%s\n" '#!/bin/sh' 'set -a' "$(env)" 'set +a' > /var/run/container_environments
+printf "%s\n%s\n%s\n%s\n" '#!/bin/sh' 'set -a' "$(env | grep '^WODBY')" 'set +a' > /var/run/container_environments
 chmod +x /var/run/container_environments
 
 if [ -n "${WODBY_HOME}" ];then

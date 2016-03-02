@@ -1,5 +1,8 @@
 #!/usr/bin/with-contenv sh
 
+printf "%s\n%s\n%s\n%s\n" '#!/bin/sh' 'set -a' "$(env)" 'set +a' > /var/run/container_environments
+chmod +x /var/run/container_environments
+
 if [ -n "${WODBY_HOME}" ];then
     [ ! -d "${WODBY_HOME}" ] && mkdir -p "${WODBY_HOME}" > /dev/null 2>&1
     chown wodby:wodby "${WODBY_HOME}" > /dev/null 2>&1
@@ -11,7 +14,7 @@ if [ ! -d "${WODBY_HOME}/.ssh" ];then
     
 fi
 if [ ! -f "${WODBY_HOME}/.profile" ];then
-    printf "%s\n%s\n%s\n" 'export TERM="xterm-color"' 'alias ls="ls --color"' 'll="ls -lah --color"' > ${WODBY_HOME}/.profile
+    printf "%s\n%s\n%s\n%s\n" 'export TERM="xterm-color"' 'alias ls="ls --color"' 'alias ll="ls -lah --color"' '/var/run/container_environments' > ${WODBY_HOME}/.profile
     chown wodby:wodby "${WODBY_HOME}/.profile" > /dev/null 2>&1
 fi
 if [ ! -d "${WODBY_HOME}/.wodby/locks" ];then

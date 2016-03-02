@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -f ./setup ];then
+    exec ./setup
+fi
+if [ $? = "0" ];then
+    exec /opt/wodby/tools/bin/confd -watch
+else
+    exit 1
+fi

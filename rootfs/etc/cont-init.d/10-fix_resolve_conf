@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# this script fixes a bug in musl-libc with async dns resolves
-# in this case we must to have only single DNS server in resolv.conf
-ns_srv=$(grep -m1 '^nameserver' /etc/resolv.conf)
-ns_other=$(grep -Ev '^#|^nameserver' /etc/resolv.conf)
-printf '%s\n%s\n' "${ns_srv}" "${ns_other}" > /etc/resolv.conf

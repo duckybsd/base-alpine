@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ -n "${WODBY_HOME}" ];then
+    [ ! -d "${WODBY_HOME}" ] && mkdir -p "${WODBY_HOME}" > /dev/null 2>&1
+    chown wodby:wodby "${WODBY_HOME}" > /dev/null 2>&1
+fi
+if [ ! -d "${WODBY_HOME/.ssh}" ];then
+    mkdir -p "${WODBY_HOME/.ssh}" > /dev/null 2>&1
+    chown wodby:wodby "${WODBY_HOME/.ssh}" > /dev/null 2>&1
+    chmod 700 "${WODBY_HOME/.ssh}" > /dev/null 2>&1
+    
+fi
+if [ -n "${WODBY_CONF}" ];then
+    [ ! -d "${WODBY_CONF}" ] && mkdir -p "${WODBY_CONF}" > /dev/null 2>&1
+    chown wodby:wodby "${WODBY_CONF}" > /dev/null 2>&1
+fi    

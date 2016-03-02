@@ -1,6 +1,6 @@
 # official base image: https://hub.docker.com/_/alpine/
 FROM alpine:3.3
-MAINTAINER Ivan Gaas <ivan.gaas@gmail.com>
+MAINTAINER Wodby <hello@wodby.com>
 
 # global variables, will be available in any heritable images
 ENV TERM="xterm-color" S6_LOGGING="1" S6_LOGGING_SCRIPT="n1 s10000000 T" WODBY_HOME="/srv" WODBY_OPT="/opt/wodby"

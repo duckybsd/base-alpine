@@ -1,5 +1,5 @@
 #!/usr/bin/with-contenv sh
-
+env
 if [ -n "${WODBY_HOME}" ];then
     [ ! -d "${WODBY_HOME}" ] && mkdir -p "${WODBY_HOME}" > /dev/null 2>&1
     chown wodby:wodby "${WODBY_HOME}" > /dev/null 2>&1

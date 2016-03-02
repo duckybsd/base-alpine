@@ -1,5 +1,9 @@
 # official base image: https://hub.docker.com/_/alpine/
+<<<<<<< HEAD
 FROM alpine:3.3
+=======
+FROM alpine:3.2
+>>>>>>> 4228254826e4ced5c6a159e8a30de3bc36a75893
 MAINTAINER Wodby <hello@wodby.com>
 
 # global variables, will be available in any heritable images
@@ -25,5 +29,10 @@ RUN export S6_OVERLAY_VER=1.17.1.2 && \
 # copy our scripts to the image
 COPY rootfs /
 
+<<<<<<< HEAD
 # default entrypoint, never overright it
 ENTRYPOINT ["/init"]
+=======
+# default entrypoint
+ENTRYPOINT ["/init"]
+>>>>>>> 4228254826e4ced5c6a159e8a30de3bc36a75893

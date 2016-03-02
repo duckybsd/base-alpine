@@ -1,5 +1,5 @@
 #!/usr/bin/with-contenv sh
-env
+
 if [ -n "${WODBY_HOME}" ];then
     [ ! -d "${WODBY_HOME}" ] && mkdir -p "${WODBY_HOME}" > /dev/null 2>&1
     chown wodby:wodby "${WODBY_HOME}" > /dev/null 2>&1
@@ -10,7 +10,18 @@ if [ ! -d "${WODBY_HOME/.ssh}" ];then
     chmod 700 "${WODBY_HOME/.ssh}" > /dev/null 2>&1
     
 fi
+if [ ! -f "${WODBY_HOME/.profile}" ];then
+    printf "%s\n%s\n%s\n" 'export TERM="xterm-color"' 'alias ls="ls --color"' 'll="ls -lah --color"' > /srv/.profile
+    chown wodby:wodby "${WODBY_HOME/.profile}" > /dev/null 2>&1
+fi
 if [ -n "${WODBY_CONF}" ];then
     [ ! -d "${WODBY_CONF}" ] && mkdir -p "${WODBY_CONF}" > /dev/null 2>&1
     chown wodby:wodby "${WODBY_CONF}" > /dev/null 2>&1
+fi
+if [ -n "${WODBY_BACKUP}" ];then
+    [ ! -d "${WODBY_BACKUP}" ] && mkdir -p "${WODBY_BACKUP}" > /dev/null 2>&1
+fi
+if [ -n "${WODBY_REPO}" ];then
+    [ ! -d "${WODBY_REPO}" ] && mkdir -p "${WODBY_REPO}" > /dev/null 2>&1
+    chown wodby:wodby "${WODBY_REPO}" > /dev/null 2>&1
 fi    

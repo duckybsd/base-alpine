@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/with-contenv sh
 
 if [ -n "${WODBY_HOME}" ];then
     [ ! -d "${WODBY_HOME}" ] && mkdir -p "${WODBY_HOME}" > /dev/null 2>&1

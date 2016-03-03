@@ -14,7 +14,7 @@ if [ ! -d "${WODBY_HOME}/.ssh" ];then
     
 fi
 if [ ! -f "${WODBY_HOME}/.profile" ];then
-    printf "%s\n%s\n%s\n%s\n" 'export TERM="xterm-color"' 'alias ls="ls --color"' 'alias ll="ls -lah --color"' '/var/run/container_environments' > ${WODBY_HOME}/.profile
+    printf "%s\n%s\n%s\n%s\n" 'export TERM="xterm-color"' 'alias ls="ls --color"' 'alias ll="ls -lah --color"' '. /var/run/container_environments' > ${WODBY_HOME}/.profile
     chown wodby:wodby "${WODBY_HOME}/.profile" > /dev/null 2>&1
 fi
 if [ ! -d "${WODBY_HOME}/.wodby/locks" ];then
@@ -33,4 +33,8 @@ if [ -n "${WODBY_REPO}" ];then
     if [ -n "${WODBY_DOCROOT}" ] && [ "${WODBY_REPO}" = "${WODBY_DOCROOT}" ];then
         chmod 750 "${WODBY_DOCROOT}" > /dev/null 2>&1
     fi
+fi
+if [ -n "${WODBY_LOGS}" ];then
+    [ ! -d "${WODBY_LOGS}" ] && mkdir -p "${WODBY_LOGS}" > /dev/null 2>&1
+    chown wodby:wodby "${WODBY_LOGS}" > /dev/null 2>&1
 fi   

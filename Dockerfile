@@ -12,12 +12,13 @@ ENV WODBY_STATIC="${WODBY_DOCROOT}/static"
 RUN export S6_OVERLAY_VER=1.17.1.2 && \
 # add wodby user and group, it must me elsewhere with the same uid/gid
 # run any services which generate any forders/files from this user
-    addgroup -S -g 41532 wodby && adduser -HS -u 41532 -h ${WODBY_HOME} -s /bin/sh -G wodby wodby && \
+    addgroup -S -g 41532 wodby && adduser -HS -u 41532 -h ${WODBY_HOME} -s /bin/bash -G wodby wodby && \
 # fixed alpine bug when /etc/hosts isn't processed
     echo 'hosts: files dns' >> /etc/nsswitch.conf && \
 # install ca certs to communicate external sites by SSL
 # and rsync as we'ar using it to syncronize folders
-    apk add --update ca-certificates rsync && \
+# and bush as a lot of customers like it
+    apk add --update ca-certificates rsync bash && \
 # install s6-overlay (https://github.com/just-containers/s6-overlay)
     wget -qO- https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VER}/s6-overlay-amd64.tar.gz | tar xz -C / && \
 # clear cache data and disable su

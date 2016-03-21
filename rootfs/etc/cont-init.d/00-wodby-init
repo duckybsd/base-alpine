@@ -5,36 +5,36 @@ chmod +x /var/run/container_environments
 
 if [ -n "${WODBY_HOME}" ];then
     [ ! -d "${WODBY_HOME}" ] && mkdir -p "${WODBY_HOME}" > /dev/null 2>&1
-    chown wodby:wodby "${WODBY_HOME}" > /dev/null 2>&1
+    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_HOME}" > /dev/null 2>&1
 fi
 if [ ! -d "${WODBY_HOME}/.ssh" ];then
     mkdir -p "${WODBY_HOME}/.ssh" > /dev/null 2>&1
-    chown wodby:wodby "${WODBY_HOME}/.ssh" > /dev/null 2>&1
+    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_HOME}/.ssh" > /dev/null 2>&1
     chmod 700 "${WODBY_HOME}/.ssh" > /dev/null 2>&1
     
 fi
 if [ ! -f "${WODBY_HOME}/.profile" ];then
     printf "%s\n%s\n%s\n%s\n" 'export TERM="xterm-color"' 'alias ls="ls --color"' 'alias ll="ls -lah --color"' '. /var/run/container_environments' > ${WODBY_HOME}/.profile
-    chown wodby:wodby "${WODBY_HOME}/.profile" > /dev/null 2>&1
+    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_HOME}/.profile" > /dev/null 2>&1
 fi
 if [ ! -d "${WODBY_HOME}/.wodby/locks" ];then
     mkdir -p "${WODBY_HOME}/.wodby/locks" > /dev/null 2>&1
 fi
 if [ -n "${WODBY_CONF}" ];then
     [ ! -d "${WODBY_CONF}" ] && mkdir -p "${WODBY_CONF}" > /dev/null 2>&1
-    chown wodby:wodby "${WODBY_CONF}" > /dev/null 2>&1
+    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_CONF}" > /dev/null 2>&1
 fi
 if [ -n "${WODBY_BACKUPS}" ];then
     [ ! -d "${WODBY_BACKUPS}" ] && mkdir -p "${WODBY_BACKUPS}" > /dev/null 2>&1
 fi
 if [ -n "${WODBY_REPO}" ];then
     [ ! -d "${WODBY_REPO}" ] && mkdir -p "${WODBY_REPO}" > /dev/null 2>&1
-    chown wodby:wodby "${WODBY_REPO}" > /dev/null 2>&1
+    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_REPO}" > /dev/null 2>&1
     if [ -n "${WODBY_DOCROOT}" ] && [ "${WODBY_REPO}" = "${WODBY_DOCROOT}" ];then
         chmod 750 "${WODBY_DOCROOT}" > /dev/null 2>&1
     fi
 fi
 if [ -n "${WODBY_LOGS}" ];then
     [ ! -d "${WODBY_LOGS}" ] && mkdir -p "${WODBY_LOGS}" > /dev/null 2>&1
-    chown wodby:wodby "${WODBY_LOGS}" > /dev/null 2>&1
+    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_LOGS}" > /dev/null 2>&1
 fi   

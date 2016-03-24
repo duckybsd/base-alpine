@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -f ./setup ];then
-    exec ./setup
+    ./setup
 fi
 if [ $? = "0" ];then
     exec /opt/wodby/tools/bin/go-dnsmasq --default-resolver --append-search-domains

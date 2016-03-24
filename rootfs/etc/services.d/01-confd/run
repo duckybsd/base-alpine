@@ -4,6 +4,7 @@ if [ -f ./setup ];then
     ./setup
 fi
 if [ $? = "0" ];then
+    exec 2>&1
     exec /opt/wodby/tools/bin/confd -watch
 else
     exit 1

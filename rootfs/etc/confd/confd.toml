@@ -1,5 +1,5 @@
 backend = "etcd"
-confdir = "${WODBY_CONF}/confd"
+#confdir = "${WODBY_CONF}/confd"
 noop = false
 scheme = "http"
 srv_domain = "etcd.wodby.svc.wodby.local"

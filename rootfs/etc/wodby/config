@@ -1,0 +1,36 @@
+user="wodby"
+srv="/srv"
+if [ -z "${WODBY_HOME}" ];then
+  wodby_home="/srv"
+  srv="/srv"
+else
+  wodby_home="${WODBY_HOME}"
+  srv="${WODBY_HOME}"
+fi
+state_uuid="0"
+repo="${srv}/.repo"
+if [ -z "${WODBY_APP_DOCROOT}" ];then
+  if [ - n "${WODBY_APP_ROOT}" ];then
+    WODBY_APP_DOCROOT="${WODBY_APP_ROOT}"
+  else
+    WODBY_APP_DOCROOT="${srv}/docroot"
+  fi
+fi
+docroot="${WODBY_APP_DOCROOT}"
+lockdir="${srv}/wodby/locks"
+etcd_ip="etcd.wodby.svc.wodby.local"
+etcd="http://${etcd_ip}:4001/v2/keys"
+backend_host="wodby-svc.wodby.wodby.local"
+backend_port="8125"
+backend_prefix="http://"
+if [ -n "${backend_host}" ] && [ -n "${backend_port}" ];then
+  backend="${backend_prefix}${backend_host}:${backend_port}"
+  #etcd="${backend}/v2/keys"
+  is_backend=0
+else
+  backend="${etcd}"
+  is_backend=1
+fi
+response_path="wodby/states/result"
+[ -z "${WODBY_APP_TYPE}" ] && WODBY_APP_TYPE="drupal"
+[ -z "${WODBY_APP_VERSION}" ] && WODBY_APP_VERSION="7"

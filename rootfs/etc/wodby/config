@@ -17,7 +17,7 @@ if [ -z "${WODBY_APP_DOCROOT}" ];then
   fi
 fi
 docroot="${WODBY_APP_DOCROOT}"
-lockdir="${srv}/wodby/locks"
+lockdir="${srv}/.wodby/locks"
 etcd_ip="etcd.wodby.svc.wodby.local"
 etcd="http://${etcd_ip}:4001/v2/keys"
 backend_host="wodby-svc.wodby.wodby.local"

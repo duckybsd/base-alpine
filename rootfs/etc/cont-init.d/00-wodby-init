@@ -39,6 +39,12 @@ if [ -n "${WODBY_LOGS}" ];then
     chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_LOGS}" > /dev/null 2>&1
 fi
 if [ -n "${WODBY_FILES}" ];then
-    [ ! -d "${WODBY_FILES}" ] && mkdir -p "${WODBY_FILES}" > /dev/null 2>&1
-    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_FILES}" > /dev/null 2>&1
+    if [ ! -d "${WODBY_FILES}" ];then
+        mkdir -p "${WODBY_FILES}" > /dev/null 2>&1
+        mkdir -p "${WODBY_FILES}"/public > /dev/null 2>&1
+        mkdir -p "${WODBY_FILES}"/private > /dev/null 2>&1
+    fi
+    chown -R "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_FILES}" > /dev/null 2>&1
+    chmod -R 750 "${WODBY_FILES}" > /dev/null 2>&1
+    chmod -R 700 "${WODBY_FILES}"/private > /dev/null 2>&1
 fi   

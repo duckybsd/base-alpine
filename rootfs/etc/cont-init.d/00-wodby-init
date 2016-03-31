@@ -37,4 +37,9 @@ fi
 if [ -n "${WODBY_LOGS}" ];then
     [ ! -d "${WODBY_LOGS}" ] && mkdir -p "${WODBY_LOGS}" > /dev/null 2>&1
     chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_LOGS}" > /dev/null 2>&1
+fi
+fi
+if [ -n "${WODBY_FILES}" ];then
+    [ ! -d "${WODBY_FILES}" ] && mkdir -p "${WODBY_FILES}" > /dev/null 2>&1
+    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_FILES}" > /dev/null 2>&1
 fi   

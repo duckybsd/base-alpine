@@ -13,6 +13,8 @@ RUN export S6_OVERLAY_VER=1.17.2.0 && \
 # add wodby user and group, it must me elsewhere with the same uid/gid
 # run any services which generate any forders/files from this user
     addgroup -S -g "${WODBY_GUID}" "${WODBY_GROUP}" && adduser -HS -u "${WODBY_GUID}" -h "${WODBY_HOME}" -s /bin/bash -G "${WODBY_GROUP}" "${WODBY_USER}" && \
+# generate random password for wodby user
+    pass=$(pwgen -s 24 1) echo -e "${pass}\n${pass}\n" | passwd wodby && \
 # fixed alpine bug when /etc/hosts isn't processed
     echo 'hosts: files dns' >> /etc/nsswitch.conf && \
 # install ca certs to communicate external sites by SSL

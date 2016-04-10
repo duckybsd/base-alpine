@@ -36,7 +36,7 @@ RUN \
 
     # Disable su
     # todo Review needed
-    rm -f /usr/bin/su
+    rm -f /usr/bin/su && \
 
     # Final cleanup
     rm -rf /var/cache/apk/* /tmp/* /usr/share/man

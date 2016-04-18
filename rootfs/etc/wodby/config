@@ -11,13 +11,6 @@ else
 fi
 state_uuid="0"
 repo="${srv}/.repo"
-if [ -z "${WODBY_APP_DOCROOT}" ];then
-  if [ - n "${WODBY_APP_ROOT}" ];then
-    WODBY_APP_DOCROOT="${WODBY_APP_ROOT}"
-  else
-    WODBY_APP_DOCROOT="${srv}/docroot"
-  fi
-fi
 docroot="${WODBY_APP_DOCROOT}"
 lockdir="${srv}/.wodby/locks"
 etcd_ip="etcd.wodby.svc.wodby.local"

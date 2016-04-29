@@ -30,6 +30,7 @@ RUN \
         nmap-ncat \
         busybox-suid \
         pwgen \
+        less \
         && \
 
     # Fixed alpine bug when /etc/hosts isn't processed

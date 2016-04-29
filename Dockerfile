@@ -6,7 +6,7 @@ MAINTAINER Wodby <hello@wodby.com>
 ENV TERM="xterm-color" S6_LOGGING="1" S6_LOGGING_SCRIPT="n1 s10000000 T" WODBY_USER="wodby" WODBY_GROUP="wodby" WODBY_GUID="41532" WODBY_HOME="/srv" WODBY_OPT="/opt/wodby"
 ENV WODBY_REPO="${WODBY_HOME}/repo" WODBY_FILES="${WODBY_HOME}/files" WODBY_BACKUPS="${WODBY_HOME}/backups" WODBY_LOGS="${WODBY_HOME}/logs" WODBY_CONF="${WODBY_HOME}/conf"
 ENV WODBY_BUILD="${WODBY_HOME}/.build" WODBY_DOCROOT="${WODBY_REPO}" WODBY_BIN="${WODBY_OPT}/bin"
-ENV WODBY_STATIC="${WODBY_DOCROOT}/static" 
+ENV WODBY_STATIC="${WODBY_DOCROOT}/static"
 
 # define local variables first (to easy maintain in future)
 RUN export S6_OVERLAY_VER=1.17.2.0 && \
@@ -20,7 +20,7 @@ RUN export S6_OVERLAY_VER=1.17.2.0 && \
 # install ca certs to communicate external sites by SSL
 # and rsync as we'ar using it to syncronize folders
 # and bush as a lot of customers like it
-    apk add --update ca-certificates rsync bash curl nmap-ncat busybox-suid && \
+    apk add --update ca-certificates rsync bash curl nmap-ncat busybox-suid less && \
 # install s6-overlay (https://github.com/just-containers/s6-overlay)
     wget -qO- https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VER}/s6-overlay-amd64.tar.gz | tar xz -C / && \
 # clear cache data and disable su

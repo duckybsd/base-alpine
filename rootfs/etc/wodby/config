@@ -27,5 +27,3 @@ else
   is_backend=1
 fi
 response_path="wodby/states/result"
-[ -z "${WODBY_APP_TYPE}" ] && WODBY_APP_TYPE="drupal"
-[ -z "${WODBY_APP_VERSION}" ] && WODBY_APP_VERSION="7"

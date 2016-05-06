@@ -3,8 +3,7 @@ FROM alpine:3.3
 MAINTAINER Wodby <hello@wodby.com>
 
 # Global variables, will be available in any heritable images
-ENV \
-    TERM="xterm-color" \
+ENV TERM="xterm-color" \
     S6_LOGGING="1" \
     S6_LOGGING_SCRIPT="n1 s10000000 T" \
 
@@ -21,15 +20,14 @@ ENV \
     WODBY_LOGS="${WODBY_HOME}/logs" \
     WODBY_CONF="${WODBY_HOME}/conf"
 
-RUN \
-
-    # Install common packages
+RUN # Install common packages
     apk add --update \
+        busybox-suid \
         ca-certificates \
         rsync \
         nmap-ncat \
-        busybox-suid \
         pwgen \
+        tar \
         less \
         && \
 
@@ -46,7 +44,6 @@ RUN \
     # Run any services which generate any forders/files from this user
     addgroup -S -g "${WODBY_GUID}" "${WODBY_GROUP}" && \
     adduser -HS -u "${WODBY_GUID}" -h "${WODBY_HOME}" -s /bin/bash -G "${WODBY_GROUP}" "${WODBY_USER}" && \
-    pass=$(pwgen -s 24 1) echo -e "${pass}\n${pass}\n" | passwd wodby && \
 
     # Disable su
     # todo Review needed

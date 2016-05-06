@@ -1,0 +1,5 @@
+#!/bin/sh
+
+with-contenv
+
+exec /opt/wodby/tools/bin/confd -watch

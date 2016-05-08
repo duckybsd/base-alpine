@@ -20,8 +20,7 @@ ENV TERM="xterm-color" \
     WODBY_LOGS="${WODBY_HOME}/logs" \
     WODBY_CONF="${WODBY_HOME}/conf"
 
-RUN # Install common packages
-    apk add --update \
+RUN apk add --update \
         busybox-suid \
         ca-certificates \
         rsync \

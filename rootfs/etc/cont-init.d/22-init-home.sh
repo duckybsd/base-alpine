@@ -1,20 +1,13 @@
-#!/bin/sh
+#!/usr/bin/with-contenv sh
 
-with-contenv
-
-# Create dirs for dev reason.
-# In the normal case, dirs are must be mounted from the host machine
+# Create home dir for dev reason only.
+# In the normal case, the dir is must be mounted from the host machine
 if [ ! -d $WODBY_HOME ]; then
     mkdir $WODBY_HOME
 fi
-if [ ! -d $WODBY_BACKUPS ]; then
-    mkdir $WODBY_BACKUPS
-fi
 
 # Fix permissions
-chown $WODBY_USER:$WODBY_GROUP \
-    $WODBY_HOME \
-    $WODBY_BACKUPS
+chown $WODBY_USER:$WODBY_GROUP $WODBY_HOME
 
 if [ ! -d $WODBY_CONF ]; then
     mkdir $WODBY_HOME/.ssh
@@ -44,6 +37,11 @@ if [ ! -d $WODBY_FILES ]; then
     mkdir $WODBY_FILES/public
     mkdir $WODBY_FILES/private
     chown -R $WODBY_USER:$WODBY_GROUP $WODBY_FILES
+fi
+
+# Do not create backup directory, because it must be mounted from the host machine
+if [ -d $WODBY_BACKUPS ]; then
+    chown $WODBY_USER:$WODBY_GROUP $WODBY_BACKUPS
 fi
 
 if [ ! -d $WODBY_HOME/.wodby/locks ]; then

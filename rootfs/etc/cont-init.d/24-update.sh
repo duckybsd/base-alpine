@@ -1,6 +1,4 @@
-#!/bin/sh
-
-with-contenv
+#!/usr/bin/with-contenv sh
 
 # Delete useless repo dir
 if [ -d $WODBY_HOME/repo ]; then

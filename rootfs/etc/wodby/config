@@ -1,5 +1,3 @@
-#!/bin/sh
-
 user="wodby"
 srv="/srv"
 if [ -z "${WODBY_HOME}" ];then

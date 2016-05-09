@@ -1,5 +1,3 @@
-#!/bin/sh
-
 answer () {
   local tmp_answer=$(cat /proc/sys/kernel/random/uuid)
   local retries=3

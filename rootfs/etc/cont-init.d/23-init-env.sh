@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/with-contenv sh
 
 # Put env vars into /var/run/wodby/env
 if [ ! -d /var/run/wodby ]; then

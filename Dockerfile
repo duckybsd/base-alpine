@@ -1,5 +1,5 @@
 # official base image: https://hub.docker.com/_/alpine/
-FROM alpine:3.3
+FROM alpine:edge
 MAINTAINER Wodby <hello@wodby.com>
 
 # global variables, will be available in any heritable images
@@ -22,7 +22,7 @@ RUN export S6_OVERLAY_VER=1.17.2.0 && \
 # and bush as a lot of customers like it
     apk add --update ca-certificates rsync bash curl nmap-ncat busybox-suid less && \
 # install s6-overlay (https://github.com/just-containers/s6-overlay)
-    wget -qO- https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VER}/s6-overlay-amd64.tar.gz | tar xz -C / && \
+    wget -qO- https://s3.amazonaws.com/wodby-releases/s6-overlay/v${S6_OVERLAY_VER}/s6-overlay-amd64.tar.gz | tar xz -C / && \
 # clear cache data and disable su
     rm -rf /var/cache/apk/* /tmp/* /usr/bin/su
 

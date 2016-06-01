@@ -1,50 +1,78 @@
-#!/usr/bin/with-contenv sh
+#!/bin/sh
 
-printf "%s\n%s\n%s\n%s\n" '#!/bin/sh' 'set -a' "$(env | grep '^WODBY')" 'set +a' > /var/run/container_environments
-chmod +x /var/run/container_environments
+# Put env vars into /var/run/wodby/env
+if [ ! -d /var/run/wodby ]; then
+    mkdir -p /var/run/wodby
+    chown $WODBY_USER:$WODBY_GROUP /var/run/wodby
+fi
 
-if [ -n "${WODBY_HOME}" ];then
-    [ ! -d "${WODBY_HOME}" ] && mkdir -p "${WODBY_HOME}" > /dev/null 2>&1
-    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_HOME}" > /dev/null 2>&1
+# Filter env vars and store
+printenv | xargs -I{} echo {} | awk ' \
+    BEGIN { FS = "=" }; { \
+        if ($1 != "HOME" \
+            && $1 != "PWD" \
+            && $1 != "PATH" \
+            && $1 != "SHLVL" \
+            && $1 != "S6_LOGGING" \
+            && $1 != "S6_LOGGING_SCRIPT") { \
+            \
+            print ""$1"="$2"" \
+        } \
+    }' > /var/run/wodby/env
+
+chown $WODBY_USER:$WODBY_GROUP /var/run/wodby/env
+
+# Ensure needed dirs, files, permissions
+chown $WODBY_USER:$WODBY_GROUP $WODBY_HOME
+
+if [ ! -d $WODBY_CONF ]; then
+    mkdir $WODBY_HOME/.ssh
+    chown $WODBY_USER:$WODBY_GROUP $WODBY_HOME/.ssh
+    chmod 700 $WODBY_HOME/.ssh
 fi
-if [ ! -d "${WODBY_HOME}/.ssh" ];then
-    mkdir -p "${WODBY_HOME}/.ssh" > /dev/null 2>&1
-    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_HOME}/.ssh" > /dev/null 2>&1
-    chmod 700 "${WODBY_HOME}/.ssh" > /dev/null 2>&1
-    
+
+# Generate env vars for sh profile
+cat /var/run/wodby/env | xargs -I{} echo {} | awk 'BEGIN { FS = "=" }; { print "export "$1"="$2"" }' > /var/run/wodby/profile-env
+chown $WODBY_USER:$WODBY_GROUP /var/run/wodby/profile-env
+chmod +x /var/run/wodby/profile-env
+
+# Delete old style .profile
+if [ -f $WODBY_HOME/.profile ] && [ $( grep -ic "/var/run/wodby/profile-env" $WODBY_HOME/.profile ) -eq 0 ]; then
+    rm $WODBY_HOME/.profile
 fi
-if [ ! -f "${WODBY_HOME}/.profile" ];then
-    printf "%s\n%s\n%s\n%s\n" 'export TERM="xterm-color"' 'alias ls="ls --color"' 'alias ll="ls -lah --color"' '. /var/run/container_environments' > ${WODBY_HOME}/.profile
-    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_HOME}/.profile" > /dev/null 2>&1
+
+# Create .profile
+if [ ! -f $WODBY_HOME/.profile ]; then
+    # Generate .profile
+    echo -e 'alias ls="ls --color"' >> $WODBY_HOME/.profile
+    echo -e 'alias ll="ls -lah --color"' >> $WODBY_HOME/.profile
+    echo -e '. /var/run/wodby/profile-env' >> $WODBY_HOME/.profile
+    chown $WODBY_USER:$WODBY_GROUP $WODBY_HOME/.profile
 fi
-if [ ! -d "${WODBY_HOME}/.wodby/locks" ];then
-    mkdir -p "${WODBY_HOME}/.wodby/locks" > /dev/null 2>&1
+
+if [ ! -d $WODBY_CONF ]; then
+    mkdir $WODBY_CONF
+    chown $WODBY_USER:$WODBY_GROUP $WODBY_CONF
 fi
-if [ -n "${WODBY_CONF}" ];then
-    [ ! -d "${WODBY_CONF}" ] && mkdir -p "${WODBY_CONF}" > /dev/null 2>&1
-    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_CONF}" > /dev/null 2>&1
+
+if [ ! -d $WODBY_LOGS ]; then
+    mkdir $WODBY_LOGS
+    chown $WODBY_USER:$WODBY_GROUP $WODBY_LOGS
 fi
-if [ -n "${WODBY_BACKUPS}" ];then
-    [ ! -d "${WODBY_BACKUPS}" ] && mkdir -p "${WODBY_BACKUPS}" > /dev/null 2>&1
+
+if [ ! -d $WODBY_FILES ]; then
+    mkdir $WODBY_FILES
+    mkdir $WODBY_FILES/public
+    mkdir $WODBY_FILES/private
+    chown -R $WODBY_USER:$WODBY_GROUP $WODBY_FILES
 fi
-if [ -n "${WODBY_REPO}" ];then
-    [ ! -d "${WODBY_REPO}" ] && mkdir -p "${WODBY_REPO}" > /dev/null 2>&1
-    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_REPO}" > /dev/null 2>&1
-    if [ -n "${WODBY_DOCROOT}" ] && [ "${WODBY_REPO}" = "${WODBY_DOCROOT}" ];then
-        chmod 750 "${WODBY_DOCROOT}" > /dev/null 2>&1
-    fi
+
+# Do not create backup directory, because it mounted from the host machine
+if [ -d $WODBY_BACKUPS ]; then
+    chown $WODBY_USER:$WODBY_GROUP $WODBY_BACKUPS
 fi
-if [ -n "${WODBY_LOGS}" ];then
-    [ ! -d "${WODBY_LOGS}" ] && mkdir -p "${WODBY_LOGS}" > /dev/null 2>&1
-    chown "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_LOGS}" > /dev/null 2>&1
+
+if [ ! -d $WODBY_HOME/.wodby/locks ]; then
+    mkdir -p $WODBY_HOME/.wodby/locks
+    chown -R $WODBY_USER:$WODBY_GROUP $WODBY_HOME/.wodby
 fi
-if [ -n "${WODBY_FILES}" ];then
-    if [ ! -d "${WODBY_FILES}" ];then
-        mkdir -p "${WODBY_FILES}" > /dev/null 2>&1
-        mkdir -p "${WODBY_FILES}"/public > /dev/null 2>&1
-        mkdir -p "${WODBY_FILES}"/private > /dev/null 2>&1
-    fi
-    chown -R "${WODBY_USER}":"${WODBY_GROUP}" "${WODBY_FILES}" > /dev/null 2>&1
-    chmod -R 750 "${WODBY_FILES}" > /dev/null 2>&1
-    chmod -R 700 "${WODBY_FILES}"/private > /dev/null 2>&1
-fi   

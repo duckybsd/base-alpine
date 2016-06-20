@@ -1,5 +1,5 @@
 # official base image: https://hub.docker.com/_/alpine/
-FROM alpine:v3.4
+FROM alpine:3.4
 MAINTAINER Wodby <hello@wodby.com>
 
 # global variables, will be available in any heritable images

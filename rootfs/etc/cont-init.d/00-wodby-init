@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/with-contenv sh
 
 # Put env vars into /var/run/wodby/env
 if [ ! -d /var/run/wodby ]; then
@@ -35,11 +35,6 @@ fi
 cat /var/run/wodby/env | xargs -I{} echo {} | awk 'BEGIN { FS = "=" }; { print "export "$1"="$2"" }' > /var/run/wodby/profile-env
 chown $WODBY_USER:$WODBY_GROUP /var/run/wodby/profile-env
 chmod +x /var/run/wodby/profile-env
-
-# Delete old style .profile
-if [ -f $WODBY_HOME/.profile ] && [ $( grep -ic "/var/run/wodby/profile-env" $WODBY_HOME/.profile ) -eq 0 ]; then
-    rm $WODBY_HOME/.profile
-fi
 
 # Create .profile
 if [ ! -f $WODBY_HOME/.profile ]; then

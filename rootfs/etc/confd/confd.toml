@@ -2,6 +2,6 @@ backend = "etcd"
 #confdir = "${WODBY_CONF}/confd"
 noop = false
 scheme = "http"
-srv_domain = "etcd.wodby.svc.wodby.local"
+srv_domain = "etcd.wodby"
 watch = true
 log-level = "info"

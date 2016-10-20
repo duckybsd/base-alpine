@@ -1,5 +1,4 @@
-# official base image: https://hub.docker.com/_/alpine/
-FROM alpine:3.4
+FROM alpine:edge
 MAINTAINER Wodby <hello@wodby.com>
 
 # global variables, will be available in any heritable images
@@ -20,7 +19,7 @@ RUN export S6_OVERLAY_VER=1.17.2.0 && \
 # install ca certs to communicate external sites by SSL
 # and rsync as we'ar using it to syncronize folders
 # and bush as a lot of customers like it
-    apk add --update ca-certificates rsync bash curl nmap-ncat busybox-suid less openssl && \
+    apk add --update libressl ca-certificates rsync bash curl nmap-ncat busybox-suid less && \
 # install s6-overlay (https://github.com/just-containers/s6-overlay)
     wget -qO- https://s3.amazonaws.com/wodby-releases/s6-overlay/v${S6_OVERLAY_VER}/s6-overlay-amd64.tar.gz | tar xz -C / && \
 # clear cache data and disable su

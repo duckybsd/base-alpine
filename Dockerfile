@@ -2,7 +2,7 @@ FROM alpine:edge
 MAINTAINER Wodby <hello@wodby.com>
 
 # global variables, will be available in any heritable images
-ENV TERM="xterm-color" S6_LOGGING="1" S6_LOGGING_SCRIPT="n1 s10000000 T" WODBY_USER="wodby" WODBY_GROUP="wodby" WODBY_GUID="41532" WODBY_HOME="/srv" WODBY_OPT="/opt/wodby"
+ENV TERM="xterm-color" WODBY_USER="wodby" WODBY_GROUP="wodby" WODBY_GUID="41532" WODBY_HOME="/srv" WODBY_OPT="/opt/wodby"
 ENV WODBY_REPO="${WODBY_HOME}/repo" WODBY_FILES="${WODBY_HOME}/files" WODBY_BACKUPS="${WODBY_HOME}/backups" WODBY_LOGS="${WODBY_HOME}/logs" WODBY_CONF="${WODBY_HOME}/conf"
 ENV WODBY_BUILD="${WODBY_HOME}/.build" WODBY_DOCROOT="${WODBY_REPO}" WODBY_BIN="${WODBY_OPT}/bin"
 ENV WODBY_STATIC="${WODBY_DOCROOT}/static"
